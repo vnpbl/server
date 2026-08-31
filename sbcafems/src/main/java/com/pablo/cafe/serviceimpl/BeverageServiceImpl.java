@@ -19,11 +19,11 @@ public class BeverageServiceImpl implements BeverageService {
     BeverageRepository beverageRepository;
 
     @Override
-    public Beverage[] getEmployees() {
-        List<BeverageData> employeesData = new ArrayList<>();
+    public Beverage[] getBeverages() {
+        List<BeverageData> beveragesData = new ArrayList<>();
         List<Beverage> beverages = new ArrayList<>();
-        beverageRepository.findAll().forEach(employeesData::add);
-        Iterator<BeverageData> it = employeesData.iterator();
+        beverageRepository.findAll().forEach(beveragesData::add);
+        Iterator<BeverageData> it = beveragesData.iterator();
 
         while(it.hasNext()) {
             Beverage beverage = new Beverage();
@@ -31,7 +31,7 @@ public class BeverageServiceImpl implements BeverageService {
             beverage.setId(beverageData.getId());
             beverage.setName(beverageData.getName());
             beverage.setDescription(beverageData.getDescription());
-            beverage.setAge(beverageData.getAge());
+            beverage.setPrice(beverageData.getPrice());
             beverages.add(beverage);
         }
 
@@ -39,7 +39,6 @@ public class BeverageServiceImpl implements BeverageService {
         for  (int i = 0; i< beverages.size(); i++){
             array[i] = beverages.get(i);
         }
-//        Beverage[] array = (Beverage[])beverages.toArray();
         return array;
     }
 
@@ -49,7 +48,7 @@ public class BeverageServiceImpl implements BeverageService {
         BeverageData beverageData = new BeverageData();
         beverageData.setName(beverage.getName());
         beverageData.setDescription(beverage.getDescription());
-        beverageData.setAge(beverage.getAge());
+        beverageData.setPrice(beverage.getPrice());
         beverageData = beverageRepository.save(beverageData);
         logger.info("add: Input"+ beverageData.toString());
 
@@ -57,7 +56,7 @@ public class BeverageServiceImpl implements BeverageService {
         newBeverage.setId(beverageData.getId());
         newBeverage.setName(beverageData.getName());
         newBeverage.setDescription(beverageData.getDescription());
-        newBeverage.setAge(beverageData.getAge());
+        newBeverage.setPrice(beverageData.getPrice());
         return newBeverage;
     }
 
@@ -67,46 +66,46 @@ public class BeverageServiceImpl implements BeverageService {
         beverageData.setId(beverage.getId());
         beverageData.setName(beverage.getName());
         beverageData.setDescription(beverage.getDescription());
-        beverageData.setAge(beverage.getAge());
+        beverageData.setPrice(beverage.getPrice());
         beverageData = beverageRepository.save(beverageData);
 
         Beverage newBeverage = new Beverage();
         newBeverage.setId(beverageData.getId());
         newBeverage.setName(beverageData.getName());
         newBeverage.setDescription(beverageData.getDescription());
-        newBeverage.setAge(beverageData.getAge());
+        newBeverage.setPrice(beverageData.getPrice());
         return newBeverage;
     }
 
     @Override
-    public Beverage getEmployee(Integer id) {
+    public Beverage getBeverage(Integer id) {
         logger.info("Input id >> "+  Integer.toString(id) );
         Optional<BeverageData> optional = beverageRepository.findById(id);
         if(optional.isPresent()) {
             logger.info("Is present >> ");
             Beverage beverage = new Beverage();
-            BeverageData employeeDatum = optional.get();
-            beverage.setId(employeeDatum.getId());
-            beverage.setName(employeeDatum.getName());
-            beverage.setDescription(employeeDatum.getDescription());
-            beverage.setAge(employeeDatum.getAge());
+            BeverageData beverageDatum = optional.get();
+            beverage.setId(beverageDatum.getId());
+            beverage.setName(beverageDatum.getName());
+            beverage.setDescription(beverageDatum.getDescription());
+            beverage.setPrice(beverageDatum.getPrice());
             return beverage;
         }
-        logger.info("Failed  >> unable to locate employee" );
+        logger.info("Failed  >> unable to locate beverage" );
         return null;
     }
 
     @Override
     public void delete(Integer id) {
         logger.info("Input >> " + Integer.toString(id));
-         Optional<BeverageData> optional = beverageRepository.findById(id);
-         if( optional.isPresent()) {
-             BeverageData employeeDatum = optional.get();
-             beverageRepository.delete(employeeDatum);
-             logger.info("Success >> " + employeeDatum.toString());
-         }
-         else {
-             logger.info("Failed  >> unable to locate employee id: " +  Integer.toString(id));
-         }
+        Optional<BeverageData> optional = beverageRepository.findById(id);
+        if( optional.isPresent()) {
+            BeverageData beverageDatum = optional.get();
+            beverageRepository.delete(beverageDatum);
+            logger.info("Success >> " + beverageDatum.toString());
+        }
+        else {
+            logger.info("Failed  >> unable to locate beverage id: " +  Integer.toString(id));
+        }
     }
 }

@@ -7,6 +7,6 @@ public class Beverage {
     int id;
     String name;
     String description;
-    int age;
+    double price;
 
 }

@@ -1,6 +1,5 @@
 package com.pablo.cafe.controller;
 
-
 import com.pablo.cafe.model.Beverage;
 import com.pablo.cafe.service.BeverageService;
 import com.pablo.cafe.controller.storage.StorageService;
@@ -11,8 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 
 @RestController
 public class BeverageController {
@@ -28,15 +25,14 @@ public class BeverageController {
         this.storageService = storageService;
     }
 
-
-    @GetMapping("/api/employee")
-    public ResponseEntity<?> listEmployees()
+    @GetMapping("/api/beverage")
+    public ResponseEntity<?> listBeverages()
     {
         HttpHeaders headers = new HttpHeaders();
         ResponseEntity<?> response;
 
         try {
-            Beverage[] beverages = beverageService.getEmployees();
+            Beverage[] beverages = beverageService.getBeverages();
             response =  ResponseEntity.ok().headers(headers).body(beverages);
         }
         catch( Exception ex)
@@ -46,7 +42,7 @@ public class BeverageController {
         return response;
     }
 
-    @PostMapping("api/employee")
+    @PostMapping("/api/beverage")
     public ResponseEntity<?> add(@RequestBody Beverage beverage){
         logger.info("Input >> "+  beverage.toString() );
         HttpHeaders headers = new HttpHeaders();
@@ -64,7 +60,7 @@ public class BeverageController {
         return response;
     }
 
-    @PutMapping("api/employee")
+    @PutMapping("/api/beverage")
     public ResponseEntity<?> update(@RequestBody Beverage beverage){
         logger.info("Update Input >> "+  beverage.toString() );
         HttpHeaders headers = new HttpHeaders();
@@ -81,13 +77,13 @@ public class BeverageController {
         return response;
     }
 
-    @GetMapping("api/employee/{id}")
+    @GetMapping("/api/beverage/{id}")
     public ResponseEntity<?> get(@PathVariable final Integer id){
-        logger.info("Input employee id >> "+  Integer.toString(id));
+        logger.info("Input beverage id >> "+  Integer.toString(id));
         HttpHeaders headers = new HttpHeaders();
         ResponseEntity<?> response;
         try {
-            Beverage beverage = beverageService.getEmployee(id);
+            Beverage beverage = beverageService.getBeverage(id);
             response = ResponseEntity.ok(beverage);
         }
         catch( Exception ex)
@@ -97,7 +93,7 @@ public class BeverageController {
         return response;
     }
 
-    @DeleteMapping("api/employee/{id}")
+    @DeleteMapping("/api/beverage/{id}")
     public ResponseEntity<?> delete(@PathVariable final Integer id){
         logger.info("Input >> "+  Integer.toString(id));
         HttpHeaders headers = new HttpHeaders();
